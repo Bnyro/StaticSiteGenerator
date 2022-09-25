@@ -1,8 +1,9 @@
 :root {
-    --base: khaki;
-    --surface: darkkhaki;
-    --text: black;
-    --nav: black;
+    --base: #3b224c;
+    --surface: #281733;
+    --text: #bcbdd0;
+    --nav: #c8c9db;
+    --links: #ECCDBA;
 }
 
 * {
@@ -12,6 +13,12 @@
 html {
     color: var(--text);
     background: var(--base);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+    color: var(--links);
+    text-decoration: none;
 }
 
 body {
@@ -27,7 +34,7 @@ main {
 }
 
 section {
-    margin: 0 2rem;
+    margin: 0 10vw;
 }
 
 header {
@@ -56,22 +63,15 @@ nav span {
 }
 
 nav li {
-    list-style: none;
     margin-bottom: 0.3rem;
 }
 
 nav a {
-    text-decoration: none;
     color: var(--nav);
 }
 
 nav a:hover {
-    filter: brightness(0.7);
     text-decoration: underline;
-}
-
-nav>li>a:visited {
-    color: var(--nav);
 }
 
 .nav-toggle {
@@ -86,7 +86,7 @@ nav>li>a:visited {
 .nav-toggle .bar {
     height: 4px;
     width: 100%;
-    background-color: black;
+    background-color: var(--text);
     transition: all 200ms ease-in-out;
 }
 
