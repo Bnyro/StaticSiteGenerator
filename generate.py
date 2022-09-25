@@ -66,10 +66,11 @@ def createNavLinks(pages):
 
     for fileName in os.listdir(targetDirName):
         path = os.path.join(targetDirName, fileName)
-        with open(path, "r") as infile:
-            text = infile.read().replace("{{navlinks}}", navHtml)
-        with open(path, "w") as outfile:
-            outfile.write(text)
+        if os.path.isfile(path):
+            with open(path, "r") as infile:
+                text = infile.read().replace("{{navlinks}}", navHtml)
+            with open(path, "w") as outfile:
+                outfile.write(text)
 
 with open('template.html') as infile:
     template = infile.read()
@@ -83,4 +84,7 @@ for file in os.listdir(sourceDirName):
 
 createNavLinks(pages)
 
-shutil.copytree('assets', os.path.join(targetDir, "assets"))
+assetsDir = os.path.join(targetDir, "assets")
+if (os.path.exists(assetsDir)):
+    shutil.rmtree(assetsDir)
+shutil.copytree('assets', assetsDir)

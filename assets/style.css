@@ -14,6 +14,14 @@
     --links: #eb6f92;
 }
 
+.material {
+    --base: #1f1b16;
+    --surface: #50453a;
+    --text: #fffbff;
+    --accent: #faefe7;
+    --links: #8a5200;
+}
+
 * {
     box-sizing: border-box;
 }
