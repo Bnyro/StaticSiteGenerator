@@ -83,4 +83,4 @@ for file in os.listdir(sourceDirName):
 
 createNavLinks(pages)
 
-shutil.copytree('assets', targetDir)
+shutil.copytree('assets', os.path.join(targetDir, "assets"))

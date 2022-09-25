@@ -11,6 +11,7 @@
     --surface: #191724;
     --text: #e0def4;
     --accent: #908caa;
+    --links: #eb6f92;
 }
 
 * {
@@ -41,7 +42,7 @@ main {
 }
 
 section {
-    margin: 0 10vw;
+    margin: 0 8vw;
 }
 
 header {
@@ -123,9 +124,10 @@ nav a:hover {
 }
 
 #brush {
-    fill: var(--text);
     height: 1.5rem;
     width: 1.5rem;
+    background-color: var(--text);
+    mask: url(brush.svg);
 }
 
 #theme-container {
