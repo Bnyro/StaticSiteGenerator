@@ -4,8 +4,11 @@ import os
 import yaml
 import markdown
 
+from obj import Page
+
 sourceDirName = "docs"
 targetDirName = "html"
+pages = []
 
 def getFileContent(filePath):
     with open(filePath) as infile:
@@ -35,14 +38,23 @@ def renderHTML(yaml, template) -> str:
         template = template.replace("{{" + item + "}}", str(yaml[item]))
     return template
 
-def createOutputFile(file):
-    fullpath = os.path.join(sourceDirName, file)
-    content = getFileContent(fullpath)
-    html = renderHTML(content, template)
+def createOutputFile(fileName):
+    fullpath = os.path.join(sourceDirName, fileName)
+    htmlFileName = fileName.replace(".md", ".html")
     targetFile = os.path.join(
         targetDirName,
-        file.replace(".md", ".html")
+        htmlFileName
     )
+
+    content = getFileContent(fullpath)
+    pages.append(
+        Page(
+            content["title"],
+            htmlFileName
+        )
+    )
+
+    html = renderHTML(content, template)
     with open(targetFile, 'w') as outfile:
         outfile.write(html)
 
@@ -55,3 +67,5 @@ if not os.path.exists(targetDir):
 
 for file in os.listdir(sourceDirName):
     createOutputFile(file)
+
+print(pages)
