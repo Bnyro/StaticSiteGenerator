@@ -2,8 +2,15 @@
     --base: #3b224c;
     --surface: #281733;
     --text: #bcbdd0;
-    --nav: #c8c9db;
+    --accent: #c8c9db;
     --links: #ECCDBA;
+}
+
+.rose-pine {
+    --base: #1f1d2e;
+    --surface: #191724;
+    --text: #e0def4;
+    --accent: #908caa;
 }
 
 * {
@@ -39,7 +46,8 @@ section {
 
 header {
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
+    align-items: center;
     padding: 2rem;
 }
 
@@ -71,7 +79,7 @@ nav li::marker {
 }
 
 nav a {
-    color: var(--nav);
+    color: var(--accent);
 }
 
 nav a:hover {
@@ -112,4 +120,25 @@ nav a:hover {
 .x:nth-of-type(3) {
     transform: rotate(-45deg);
     transform-origin: bottom left;
+}
+
+#brush {
+    fill: var(--text);
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+#theme-container {
+    display: flex;
+}
+
+#theme-select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin-left: 1.5rem;
+    background: none;
+    border: none;
+    scale: 1.2;
+    color: var(--text);
 }

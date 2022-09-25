@@ -83,4 +83,4 @@ for file in os.listdir(sourceDirName):
 
 createNavLinks(pages)
 
-shutil.copy('style.css', targetDir)
+shutil.copytree('assets', targetDir)
