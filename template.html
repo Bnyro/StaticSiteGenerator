@@ -1,107 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="/assets/icon.svg">
+
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="/style.css">
+
     <title>{{title}}</title>
 </head>
 
-<nav>
-
-    <div id="nav-links">
-        {{navlinks}}
-    </div>
-
-    <a class="nav-toggle">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-    </a>
-
-</nav>
-
 <body>
 
-    <h1>{{title}}</h1>
-    <p>By {{author}}, {{date}}</p>
+    <nav>
+        <span>
+            {{navlinks}}
+        </span>
+    </nav>
 
-    {{content}}
+    <main>
+
+        <header>
+
+            <a class="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </a>
+
+        </header>
+
+        <section>
+
+            <h1>{{title}}</h1>
+            <p>By {{author}}, {{date}}</p>
+
+            {{content}}
+
+        </section>
+
+    </main>
 
 </body>
 
 </html>
-
-<style>
-    :root {
-        --base: khaki;
-    }
-
-    nav {
-        display: flex;
-        justify-content: end;
-        padding: 1rem;
-    }
-
-    #nav-links {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 0;
-        left: 0;
-        min-height: 100vh;
-        padding: 2rem;
-        background: var(--base);
-        transition: all 0.3s ease-in-out;
-        transform: translateX(-100%);
-    }
-
-    #nav-links.visible {
-        transform: translateX(0%);
-    }
-
-    #nav-links>li {
-        list-style: none;
-        margin-bottom: 0.3rem;
-    }
-
-    #nav-links>li>a {
-        text-decoration: none;
-    }
-
-    .nav-toggle {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        cursor: pointer;
-        height: 1.5rem;
-        width: 1.8rem;
-    }
-
-    .nav-toggle .bar {
-        height: 4px;
-        width: 100%;
-        background-color: black;
-        transition: all 200ms ease-in-out;
-    }
-
-    .x {
-        width: 1.8rem;
-    }
-
-    .x:nth-of-type(1) {
-        transform: rotate(45deg);
-        transform-origin: top left;
-    }
-
-    .x:nth-of-type(2) {
-        transform-origin: center;
-        width: 0;
-    }
-
-    .x:nth-of-type(3) {
-        transform: rotate(-45deg);
-        transform-origin: bottom left;
-    }
-</style>
 
 <script>
     let $ = document.querySelector.bind(document);
@@ -109,7 +56,7 @@
 
     function toggleHamburger() {
         $$('.bar').forEach(bar => bar.classList.toggle('x'));
-        $('#nav-links').classList.toggle('visible');
+        $('nav').classList.toggle('visible');
     }
 
     $('.nav-toggle').addEventListener('click', toggleHamburger);

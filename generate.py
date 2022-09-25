@@ -2,6 +2,7 @@
 
 import os
 import yaml
+import shutil
 import markdown
 
 from obj import Page
@@ -81,3 +82,5 @@ for file in os.listdir(sourceDirName):
     createOutputFile(file)
 
 createNavLinks(pages)
+
+shutil.copy('style.css', targetDir)

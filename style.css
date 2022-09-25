@@ -1,0 +1,110 @@
+:root {
+    --base: khaki;
+    --surface: darkkhaki;
+    --text: black;
+    --nav: black;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    color: var(--text);
+    background: var(--base);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+section {
+    margin: 0 2rem;
+}
+
+header {
+    display: flex;
+    justify-content: end;
+    padding: 2rem;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: var(--surface);
+    transition: all 0.3s;
+    width: max-content;
+    max-width: 0;
+    overflow-x: hidden;
+}
+
+nav.visible {
+    max-width: 30vw;
+}
+
+nav span {
+    margin: 2rem 1.5rem;
+}
+
+nav li {
+    list-style: none;
+    margin-bottom: 0.3rem;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--nav);
+}
+
+nav a:hover {
+    filter: brightness(0.7);
+    text-decoration: underline;
+}
+
+nav>li>a:visited {
+    color: var(--nav);
+}
+
+.nav-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    height: 1.5rem;
+    width: 1.8rem;
+}
+
+.nav-toggle .bar {
+    height: 4px;
+    width: 100%;
+    background-color: black;
+    transition: all 200ms ease-in-out;
+}
+
+.x {
+    width: 1.8rem;
+}
+
+.x:nth-of-type(1) {
+    transform: rotate(45deg);
+    transform-origin: top left;
+}
+
+.x:nth-of-type(2) {
+    transform-origin: center;
+    width: 0;
+}
+
+.x:nth-of-type(3) {
+    transform: rotate(-45deg);
+    transform-origin: bottom left;
+}
