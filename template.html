@@ -7,6 +7,10 @@
 
 <nav>
 
+    <div id="nav-links">
+        {{navlinks}}
+    </div>
+
     <a class="nav-toggle">
         <span class="bar"></span>
         <span class="bar"></span>
@@ -27,10 +31,40 @@
 </html>
 
 <style>
+    :root {
+        --base: khaki;
+    }
+
     nav {
         display: flex;
         justify-content: end;
         padding: 1rem;
+    }
+
+    #nav-links {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 0;
+        left: 0;
+        min-height: 100vh;
+        padding: 2rem;
+        background: var(--base);
+        transition: all 0.3s ease-in-out;
+        transform: translateX(-100%);
+    }
+
+    #nav-links.visible {
+        transform: translateX(0%);
+    }
+
+    #nav-links>li {
+        list-style: none;
+        margin-bottom: 0.3rem;
+    }
+
+    #nav-links>li>a {
+        text-decoration: none;
     }
 
     .nav-toggle {
@@ -74,8 +108,9 @@
     let $$ = document.querySelectorAll.bind(document);
 
     function toggleHamburger() {
-        $$('.bar').forEach(bar => bar.classList.toggle('x'))
+        $$('.bar').forEach(bar => bar.classList.toggle('x'));
+        $('#nav-links').classList.toggle('visible');
     }
 
-    $('.nav-toggle').addEventListener('click', toggleHamburger)
+    $('.nav-toggle').addEventListener('click', toggleHamburger);
 </script>

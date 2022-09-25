@@ -58,6 +58,18 @@ def createOutputFile(fileName):
     with open(targetFile, 'w') as outfile:
         outfile.write(html)
 
+def createNavLinks(pages):
+    navHtml = ""
+    for page in pages:
+        navHtml += f"<li><a href={page.location}>{page.title}</a></li>\n"
+
+    for fileName in os.listdir(targetDirName):
+        path = os.path.join(targetDirName, fileName)
+        with open(path, "r") as infile:
+            text = infile.read().replace("{{navlinks}}", navHtml)
+        with open(path, "w") as outfile:
+            outfile.write(text)
+
 with open('template.html') as infile:
     template = infile.read()
 
@@ -68,4 +80,4 @@ if not os.path.exists(targetDir):
 for file in os.listdir(sourceDirName):
     createOutputFile(file)
 
-print(pages)
+createNavLinks(pages)
