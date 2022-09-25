@@ -58,12 +58,12 @@ nav.visible {
     max-width: 30vw;
 }
 
-nav span {
-    margin: 2rem 1.5rem;
+nav ol {
+    margin: 1rem 0.2rem;
 }
 
 nav li {
-    margin-bottom: 0.3rem;
+    margin: 0.8rem 0;
 }
 
 nav a {
@@ -71,7 +71,8 @@ nav a {
 }
 
 nav a:hover {
-    text-decoration: underline;
+    text-decoration: none;
+    opacity: 0.7;
 }
 
 .nav-toggle {
