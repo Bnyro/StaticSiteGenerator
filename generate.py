@@ -1,10 +1,14 @@
 #!/usr/bin/python
 
+import os
 import yaml
 import markdown
 
-def getFileContent():
-    with open('docs/index.md') as infile:
+sourceDirName = "docs"
+targetDirName = "html"
+
+def getFileContent(filePath):
+    with open(filePath) as infile:
 
         for s in infile:
             if s.startswith('---'):
@@ -20,7 +24,7 @@ def getFileContent():
         ym = ''.join(yaml_lines)
         md = ''.join(infile)
 
-    info = yaml.load(ym, yaml.SafeLoader)
+    info = yaml.safe_load(ym)
     content = markdown.markdown(md)
     info['content'] = content
 
@@ -31,11 +35,23 @@ def renderHTML(yaml, template) -> str:
         template = template.replace("{{" + item + "}}", str(yaml[item]))
     return template
 
+def createOutputFile(file):
+    fullpath = os.path.join(sourceDirName, file)
+    content = getFileContent(fullpath)
+    html = renderHTML(content, template)
+    targetFile = os.path.join(
+        targetDirName,
+        file.replace(".md", ".html")
+    )
+    with open(targetFile, 'w') as outfile:
+        outfile.write(html)
+
 with open('template.html') as infile:
     template = infile.read()
 
-html = renderHTML(getFileContent(), template)
-print(html)
+targetDir = os.path.join(targetDirName)
+if not os.path.exists(targetDir):
+    os.mkdir(targetDir)
 
-# with open('output.html', 'w') as outfile:
-    # outfile.write(html)
+for file in os.listdir(sourceDirName):
+    createOutputFile(file)

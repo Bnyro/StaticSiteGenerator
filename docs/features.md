@@ -1,5 +1,5 @@
 ---
-author: John Doe
+author: Martin McBride
 title: Features of markdown
 date: 2020-05-23
 tags:
