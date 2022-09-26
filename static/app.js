@@ -29,3 +29,7 @@ $('#print').addEventListener('click', () => {
     WinPrint.print();
     WinPrint.close();
 })
+
+$('#theme-mode').addEventListener('click', () => {
+    $('html').style.filter = $('html').style.filter === "invert(1)" ? "" : "invert(1)";
+})

@@ -9,7 +9,6 @@ class Page:
     def __lt__(self, other):
         return self.title() < other.title()
 
-
     def title(self) -> str:
         """
         Get the title of a Page object

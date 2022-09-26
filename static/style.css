@@ -110,19 +110,19 @@ nav a:hover {
     flex-direction: column;
     justify-content: space-between;
     cursor: pointer;
-    height: 1.5rem;
-    width: 1.8rem;
+    height: 1rem;
+    width: 1.2rem;
 }
 
 .nav-toggle .bar {
-    height: 4px;
+    height: 3px;
     width: 100%;
     background-color: var(--text);
     transition: all 200ms ease-in-out;
 }
 
 .x {
-    width: 1.8rem;
+    width: 2rem;
 }
 
 .x:nth-of-type(1) {
@@ -145,31 +145,28 @@ nav a:hover {
 }
 
 #options-container>* {
-    margin: 0 0.3rem;
+    margin: 0 1rem;
 }
 
 .icon {
     height: 1.5rem;
     width: 1.5rem;
-}
-
-#brush {
-    background-color: var(--text);
-    mask: url(brush.svg);
-}
-
-#print {
     scale: 1.8;
     cursor: pointer;
+}
+
+.icon:hover {
+    filter: drop-shadow(0 0 0.5rem var(--accent));
 }
 
 #theme-select {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    margin-left: 1.5rem;
+    margin-left: 0;
     background: none;
     border: none;
     scale: 1.2;
     color: var(--text);
+    cursor: pointer;
 }
