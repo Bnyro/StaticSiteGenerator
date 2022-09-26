@@ -89,13 +89,10 @@ nav li {
     display: block;
 }
 
-nav li::marker {
-    font-style: oblique;
-    font-weight: 700;
-}
-
 nav li:before {
-    content: counters(item, ".") " ";
+    content: counters(item, ".") ". ";
+    font-weight: 700;
+    font-style: oblique;
     counter-increment: item;
 }
 
