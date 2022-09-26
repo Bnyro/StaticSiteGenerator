@@ -76,15 +76,22 @@ nav.visible {
 
 nav ol {
     margin: 1rem 0.2rem;
+    counter-reset: item;
 }
 
 nav li {
     margin: 0.8rem 0;
+    display: block;
 }
 
 nav li::marker {
     font-style: oblique;
     font-weight: 700;
+}
+
+nav li:before {
+    content: counters(item, ".") " ";
+    counter-increment: item;
 }
 
 nav a {
