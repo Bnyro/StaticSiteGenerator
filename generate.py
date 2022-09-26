@@ -6,7 +6,8 @@ import json
 import shutil
 import markdown
 
-from obj import Page
+from modules.obj import Page
+from modules.generator import PageGenerator
 
 SOURCE_DIR_PATH = "docs"
 TARGET_DIR_PATH = "html"
@@ -42,47 +43,6 @@ def get_file_content(file_path) -> dict:
         info['content'] = content
 
     return info
-
-def replace_by_key(text: str, dict: dict) -> str:
-    """
-    Replace the keys of a dict with their values inside a text
-    :param text: The base text to modify
-    :param dict: The dict object containing the fields to replace
-    :return The modified text as string
-    """
-    for key in dict:
-        text = text.replace("{{" + key + "}}", str(dict[key]))
-    return text
-
-
-def render_html(template, content, config, nav_html) -> str:
-    """
-    Replace all the keys in the dict object with their values inside the template
-    :param info: Dict object containing the source configuration
-    :param template: The HTML template whose content should be rendered
-    :return The rendered HTML as string
-    """
-    template = replace_by_key(template, content)
-    template = replace_by_key(template, config)
-    template = template.replace("{{navlinks}}", nav_html)
-
-    return template
-
-def create_output_file(page: Page, template: str, config: dict, nav_html: str):
-    """
-    Generate an output file by reading the markdown file and rendering it into the template
-    :param file_name: The name or relative path of the source file
-    :param template: The HTML template to use as base
-    :param config: The projects config
-    :return The generated [Page] object
-    """
-    target_file_name = page.location.replace(".md", ".html")
-    target_file = target_file_name
-
-    html = render_html(template, page.content, config, nav_html)
-
-    with open(target_file, 'w') as outfile:
-        outfile.write(html)
 
 def get_nav_html(pages: list) -> str:
     """
@@ -132,16 +92,6 @@ def index_pages(base_path: str) -> list:
     pages.sort()
     return pages
 
-def create_pages(pages, template: str, config: dict, nav_html: str):
-    for page in pages:
-        if page.content is not None:
-            create_output_file(page, template, config, nav_html)
-        else:
-            if not os.path.exists(page.location):
-                os.mkdir(page.location)
-            create_pages(page.children, template, config, nav_html)
-
-
 def generate():
     if (os.path.exists(TARGET_DIR_PATH)):
         shutil.rmtree(TARGET_DIR_PATH)
@@ -155,8 +105,9 @@ def generate():
 
     pages = index_pages(SOURCE_DIR_PATH)
     nav_html = get_nav_html(pages)
-    
-    create_pages(pages, template, config, nav_html)
+
+    page_generator = PageGenerator(template, config, nav_html)
+    page_generator.create(pages)
 
     shutil.copytree(
         SOURCE_ASSETS_PATH,
