@@ -7,8 +7,10 @@ import markdown
 
 from obj import Page
 
-SOURCE_DIR_NAME = "docs"
-TARGET_DIR_NAME = "html"
+SOURCE_DIR_PATH = "docs"
+TARGET_DIR_PATH = "html"
+TEMPLATE_FILE_PATH = "template.html"
+SOURCE_ASSETS_PATH = "static"
 
 pages = []
 
@@ -40,11 +42,11 @@ def render_html(info, template) -> str:
         template = template.replace("{{" + key + "}}", str(info[key]))
     return template
 
-def create_output_file(file_name):
-    full_path = os.path.join(SOURCE_DIR_NAME, file_name)
+def create_output_file(file_name, template):
+    full_path = os.path.join(SOURCE_DIR_PATH, file_name)
     html_file_name = file_name.replace(".md", ".html")
     target_file = os.path.join(
-        TARGET_DIR_NAME,
+        TARGET_DIR_PATH,
         html_file_name
     )
 
@@ -65,27 +67,33 @@ def create_nav_links(pages):
     for page in pages:
         nav_html += f"<li><a href={page.location}>{page.title}</a></li>\n"
 
-    for file_name in os.listdir(TARGET_DIR_NAME):
-        path = os.path.join(TARGET_DIR_NAME, file_name)
+    for file_name in os.listdir(TARGET_DIR_PATH):
+        path = os.path.join(TARGET_DIR_PATH, file_name)
         if os.path.isfile(path):
             with open(path, "r") as infile:
                 text = infile.read().replace("{{navlinks}}", nav_html)
             with open(path, "w") as outfile:
                 outfile.write(text)
 
-with open('template.html') as infile:
-    template = infile.read()
+def generate():
+    if (os.path.exists(TARGET_DIR_PATH)):
+        shutil.rmtree(TARGET_DIR_PATH)
+    os.mkdir(TARGET_DIR_PATH)
+    
+    with open(TEMPLATE_FILE_PATH) as infile:
+        template = infile.read()        
 
-target_dir = os.path.join(TARGET_DIR_NAME)
-if not os.path.exists(target_dir):
-    os.mkdir(target_dir)
+    for file_name in os.listdir(SOURCE_DIR_PATH):
+        create_output_file(file_name, template)
 
-for file_name in os.listdir(SOURCE_DIR_NAME):
-    create_output_file(file_name)
+    create_nav_links(pages)
+    
+    shutil.copytree(
+        SOURCE_ASSETS_PATH,
+        os.path.join(
+            TARGET_DIR_PATH,
+            SOURCE_ASSETS_PATH
+        )
+    )
 
-create_nav_links(pages)
-
-assets_dir = os.path.join(target_dir, "assets")
-if (os.path.exists(assets_dir)):
-    shutil.rmtree(assets_dir)
-shutil.copytree('assets', assets_dir)
+generate()
