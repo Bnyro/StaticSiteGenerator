@@ -12,8 +12,6 @@ TARGET_DIR_PATH = "html"
 TEMPLATE_FILE_PATH = "template.html"
 SOURCE_ASSETS_PATH = "static"
 
-pages = []
-
 def get_file_content(file_path) -> dict:
     """
     Get the content of a properly formatted markdown file
@@ -53,30 +51,30 @@ def render_html(info, template) -> str:
         template = template.replace("{{" + key + "}}", str(info[key]))
     return template
 
-def create_output_file(file_name, template):
+def create_output_file(file_name, template) -> Page:
     """
     Generate an output file by reading the markdown file and rendering it into the template
     :param file_name: The name or relative path of the source file
     :param template: The HTML template to use as base
+    :return The generated [Page] object
     """
     full_path = os.path.join(SOURCE_DIR_PATH, file_name)
-    html_file_name = file_name.replace(".md", ".html")
+    target_file_name = file_name.replace(".md", ".html")
     target_file = os.path.join(
         TARGET_DIR_PATH,
-        html_file_name
+        target_file_name
     )
 
     content = get_file_content(full_path)
-    pages.append(
-        Page(
-            content["title"],
-            html_file_name
-        )
-    )
 
     html = render_html(content, template)
     with open(target_file, 'w') as outfile:
         outfile.write(html)
+
+    return Page(
+            content["title"],
+            target_file_name
+        )
 
 def create_nav_links(pages):
     """
@@ -103,8 +101,11 @@ def generate():
     with open(TEMPLATE_FILE_PATH) as infile:
         template = infile.read()        
 
+    pages = []
+
     for file_name in os.listdir(SOURCE_DIR_PATH):
-        create_output_file(file_name, template)
+        page = create_output_file(file_name, template)
+        pages.append(page)
 
     create_nav_links(pages)
     
