@@ -95,8 +95,7 @@ def get_nav_html(pages) -> str:
         location = "/" + page.location.replace(f"{TARGET_DIR_PATH}/", "")
         nav_html += f"<a href={location}><li>{page.title}</li></a>\n"
         if page.children is not None:
-            nav_html += "<ol>\n" + get_nav_html(page.children) + "<ol>\n"
-        # nav_html += "</li>"
+            nav_html += "<ol>\n" + get_nav_html(page.children) + "</ol>\n"
 
     return nav_html
 
@@ -126,12 +125,12 @@ def index_pages(base_path: str) -> list:
             pages.append(
                 Page(
                     "subdir",
-                    get_target_file_path(f.path),
+                    get_target_file_path(f.path) + "/",
                     None,
                     index_pages(f.path)
                 )
             )
-    
+    pages.sort()
     return pages
 
 def create_pages(pages, template: str, config: dict, nav_html: str):
