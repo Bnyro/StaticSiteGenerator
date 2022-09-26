@@ -14,7 +14,12 @@ SOURCE_ASSETS_PATH = "static"
 
 pages = []
 
-def get_file_content(file_path):
+def get_file_content(file_path) -> dict:
+    """
+    Get the content of a properly formatted markdown file
+    :param file_path: Path of the markdown file
+    :return A dict object containing all the extracted information
+    """
     with open(file_path) as infile:
 
         for s in infile:
@@ -38,11 +43,22 @@ def get_file_content(file_path):
     return info
 
 def render_html(info, template) -> str:
+    """
+    Replace all the keys in the dict object with their values inside the template
+    :param info: Dict object containing the source configuration
+    :param template: The HTML template whose content should be rendered
+    :return The rendered HTML as string
+    """
     for key in info:
         template = template.replace("{{" + key + "}}", str(info[key]))
     return template
 
 def create_output_file(file_name, template):
+    """
+    Generate an output file by reading the markdown file and rendering it into the template
+    :param file_name: The name or relative path of the source file
+    :param template: The HTML template to use as base
+    """
     full_path = os.path.join(SOURCE_DIR_PATH, file_name)
     html_file_name = file_name.replace(".md", ".html")
     target_file = os.path.join(
@@ -63,6 +79,10 @@ def create_output_file(file_name, template):
         outfile.write(html)
 
 def create_nav_links(pages):
+    """
+    Insert the navigation links inside the file
+    :param pages: A list of the [Page] class
+    """
     nav_html = ""
     for page in pages:
         nav_html += f"<li><a href={page.location}>{page.title}</a></li>\n"
