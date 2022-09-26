@@ -2,6 +2,7 @@
 
 import os
 import yaml
+import json
 import shutil
 import markdown
 
@@ -11,6 +12,7 @@ SOURCE_DIR_PATH = "docs"
 TARGET_DIR_PATH = "html"
 TEMPLATE_FILE_PATH = "template.html"
 SOURCE_ASSETS_PATH = "static"
+CONFIG_PATH = "config.json"
 
 def get_file_content(file_path) -> dict:
     """
@@ -51,11 +53,12 @@ def render_html(info, template) -> str:
         template = template.replace("{{" + key + "}}", str(info[key]))
     return template
 
-def create_output_file(file_name, template) -> Page:
+def create_output_file(file_name, template, config) -> Page:
     """
     Generate an output file by reading the markdown file and rendering it into the template
     :param file_name: The name or relative path of the source file
     :param template: The HTML template to use as base
+    :param config: The projects config
     :return The generated [Page] object
     """
     full_path = os.path.join(SOURCE_DIR_PATH, file_name)
@@ -94,18 +97,29 @@ def create_nav_links(pages):
             with open(path, "w") as f:
                 f.write(text)
 
+def generate_index() -> list:
+    """
+    Indexes all pages for use as navigation list
+    :returns A list of the indexed pages
+    """
+    for file_name in os.listdir(SOURCE_DIR_PATH):
+        print(file_name)
+
 def generate():
     if (os.path.exists(TARGET_DIR_PATH)):
         shutil.rmtree(TARGET_DIR_PATH)
     os.mkdir(TARGET_DIR_PATH)
     
     with open(TEMPLATE_FILE_PATH) as infile:
-        template = infile.read()        
+        template = infile.read()    
+
+    with open(CONFIG_PATH, "r") as infile:
+        config = json.load(infile)   
 
     pages = []
 
     for file_name in os.listdir(SOURCE_DIR_PATH):
-        page = create_output_file(file_name, template)
+        page = create_output_file(file_name, template, config)
         pages.append(page)
 
     create_nav_links(pages)
@@ -117,5 +131,20 @@ def generate():
             SOURCE_ASSETS_PATH
         )
     )
+
+def run_fast_scandir(dir):    # dir: str, ext: list
+    subfolders, files = [], []
+
+    for f in os.scandir(dir):
+        if f.is_dir():
+            subfolders.append(f.path)
+        elif f.is_file():
+            files.append(f.path)
+
+    for dir in list(subfolders):
+        sf, f = run_fast_scandir(dir)
+        subfolders.extend(sf)
+        files.extend(f)
+    return subfolders, files
 
 generate()

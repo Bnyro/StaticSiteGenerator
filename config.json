@@ -1,0 +1,10 @@
+{
+    "title": "SSG",
+    "languageCode": "en",
+    "meta": {
+        "title": "SSG",
+        "image": "/static/icon.svg",
+        "description": "Static Site Generator"
+    }
+
+}

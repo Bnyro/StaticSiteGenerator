@@ -4,3 +4,5 @@ from dataclasses import dataclass
 class Page:
     title: str
     location: str
+    content: dict | None = None
+    children: list | None = None
