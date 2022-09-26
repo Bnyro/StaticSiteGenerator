@@ -1,6 +1,6 @@
 {
-    "title": "SSG",
-    "languageCode": "en",
+    "doc:title": "SSG",
+    "language": "en",
     "meta:title": "SSG",
     "meta:type": "website",
     "meta:image": "/static/icon.svg",
