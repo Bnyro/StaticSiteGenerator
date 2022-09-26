@@ -7,12 +7,13 @@ import markdown
 
 from obj import Page
 
-sourceDirName = "docs"
-targetDirName = "html"
+SOURCE_DIR_NAME = "docs"
+TARGET_DIR_NAME = "html"
+
 pages = []
 
-def getFileContent(filePath):
-    with open(filePath) as infile:
+def get_file_content(file_path):
+    with open(file_path) as infile:
 
         for s in infile:
             if s.startswith('---'):
@@ -34,57 +35,57 @@ def getFileContent(filePath):
 
     return info
 
-def renderHTML(yaml, template) -> str:
-    for item in yaml:
-        template = template.replace("{{" + item + "}}", str(yaml[item]))
+def render_html(info, template) -> str:
+    for key in info:
+        template = template.replace("{{" + key + "}}", str(info[key]))
     return template
 
-def createOutputFile(fileName):
-    fullpath = os.path.join(sourceDirName, fileName)
-    htmlFileName = fileName.replace(".md", ".html")
-    targetFile = os.path.join(
-        targetDirName,
-        htmlFileName
+def create_output_file(file_name):
+    full_path = os.path.join(SOURCE_DIR_NAME, file_name)
+    html_file_name = file_name.replace(".md", ".html")
+    target_file = os.path.join(
+        TARGET_DIR_NAME,
+        html_file_name
     )
 
-    content = getFileContent(fullpath)
+    content = get_file_content(full_path)
     pages.append(
         Page(
             content["title"],
-            htmlFileName
+            html_file_name
         )
     )
 
-    html = renderHTML(content, template)
-    with open(targetFile, 'w') as outfile:
+    html = render_html(content, template)
+    with open(target_file, 'w') as outfile:
         outfile.write(html)
 
-def createNavLinks(pages):
-    navHtml = ""
+def create_nav_links(pages):
+    nav_html = ""
     for page in pages:
-        navHtml += f"<li><a href={page.location}>{page.title}</a></li>\n"
+        nav_html += f"<li><a href={page.location}>{page.title}</a></li>\n"
 
-    for fileName in os.listdir(targetDirName):
-        path = os.path.join(targetDirName, fileName)
+    for file_name in os.listdir(TARGET_DIR_NAME):
+        path = os.path.join(TARGET_DIR_NAME, file_name)
         if os.path.isfile(path):
             with open(path, "r") as infile:
-                text = infile.read().replace("{{navlinks}}", navHtml)
+                text = infile.read().replace("{{navlinks}}", nav_html)
             with open(path, "w") as outfile:
                 outfile.write(text)
 
 with open('template.html') as infile:
     template = infile.read()
 
-targetDir = os.path.join(targetDirName)
-if not os.path.exists(targetDir):
-    os.mkdir(targetDir)
+target_dir = os.path.join(TARGET_DIR_NAME)
+if not os.path.exists(target_dir):
+    os.mkdir(target_dir)
 
-for file in os.listdir(sourceDirName):
-    createOutputFile(file)
+for file_name in os.listdir(SOURCE_DIR_NAME):
+    create_output_file(file_name)
 
-createNavLinks(pages)
+create_nav_links(pages)
 
-assetsDir = os.path.join(targetDir, "assets")
-if (os.path.exists(assetsDir)):
-    shutil.rmtree(assetsDir)
-shutil.copytree('assets', assetsDir)
+assets_dir = os.path.join(target_dir, "assets")
+if (os.path.exists(assets_dir)):
+    shutil.rmtree(assets_dir)
+shutil.copytree('assets', assets_dir)
