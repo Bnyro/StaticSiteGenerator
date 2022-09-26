@@ -42,15 +42,22 @@ def get_file_content(file_path) -> dict:
 
     return info
 
-def render_html(info, template) -> str:
+def replace_by_key(text: str, dict: dict) -> str:
+    for key in dict:
+        text = text.replace("{{" + key + "}}", str(dict[key]))
+    return text
+
+
+def render_html(template, content, config) -> str:
     """
     Replace all the keys in the dict object with their values inside the template
     :param info: Dict object containing the source configuration
     :param template: The HTML template whose content should be rendered
     :return The rendered HTML as string
     """
-    for key in info:
-        template = template.replace("{{" + key + "}}", str(info[key]))
+    template = replace_by_key(template, content)
+    template = replace_by_key(template, config)
+
     return template
 
 def create_output_file(file_name, template, config) -> Page:
@@ -69,8 +76,8 @@ def create_output_file(file_name, template, config) -> Page:
     )
 
     content = get_file_content(full_path)
+    html = render_html(template, content, config)
 
-    html = render_html(content, template)
     with open(target_file, 'w') as outfile:
         outfile.write(html)
 

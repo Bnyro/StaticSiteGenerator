@@ -1,11 +1,9 @@
 {
     "title": "SSG",
     "languageCode": "en",
-    "meta": {
-        "title": "SSG",
-        "image": "/static/icon.svg",
-        "url": "https://bnyro.github.io",
-        "description": "Static Site Generator"
-    }
-
+    "meta:title": "SSG",
+    "meta:type": "website",
+    "meta:image": "/static/icon.svg",
+    "meta:url": "https://bnyro.github.io",
+    "meta:description": "Static Site Generator"
 }
