@@ -143,15 +143,27 @@ nav a:hover {
     transform-origin: bottom left;
 }
 
-#brush {
+#options-container {
+    display: flex;
+}
+
+#options-container>* {
+    margin: 0 0.3rem;
+}
+
+.icon {
     height: 1.5rem;
     width: 1.5rem;
+}
+
+#brush {
     background-color: var(--text);
     mask: url(brush.svg);
 }
 
-#theme-container {
-    display: flex;
+#print {
+    scale: 1.8;
+    cursor: pointer;
 }
 
 #theme-select {
