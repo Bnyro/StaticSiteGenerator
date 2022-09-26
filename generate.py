@@ -84,7 +84,7 @@ def create_output_file(page: Page, template: str, config: dict, nav_html: str):
     with open(target_file, 'w') as outfile:
         outfile.write(html)
 
-def get_nav_html(pages) -> str:
+def get_nav_html(pages: list) -> str:
     """
     Insert the navigation links inside the file
     :param pages: A list of the [Page] class
@@ -94,7 +94,7 @@ def get_nav_html(pages) -> str:
     for page in pages:
         if not page.location.endswith("index.html"):
             location = "/" + page.location.replace(f"{TARGET_DIR_PATH}/", "")
-            nav_html += f"<a href={location}><li>{page.title}</li></a>\n"
+            nav_html += f"<a href={location}><li>{page.title()}</li></a>\n"
         if page.children is not None:
             nav_html += "<ol>\n" + get_nav_html(page.children) + "</ol>\n"
 
@@ -117,7 +117,6 @@ def index_pages(base_path: str) -> list:
         if f.is_file():
             pages.append(
                 Page(
-                    "title",
                     get_target_file_path(f.path),
                     get_file_content(f.path)
                 )
@@ -125,7 +124,6 @@ def index_pages(base_path: str) -> list:
         elif f.is_dir():
             pages.append(
                 Page(
-                    "subdir",
                     get_target_file_path(f.path) + "/",
                     None,
                     index_pages(f.path)
