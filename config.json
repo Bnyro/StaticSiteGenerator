@@ -4,6 +4,7 @@
     "meta": {
         "title": "SSG",
         "image": "/static/icon.svg",
+        "url": "https://bnyro.github.io",
         "description": "Static Site Generator"
     }
 
