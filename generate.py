@@ -88,10 +88,11 @@ def create_nav_links(pages):
     for file_name in os.listdir(TARGET_DIR_PATH):
         path = os.path.join(TARGET_DIR_PATH, file_name)
         if os.path.isfile(path):
-            with open(path, "w+") as f:
+            with open(path, "r") as f:
                 text = f.read().replace("{{navlinks}}", nav_html)
+                
+            with open(path, "w") as f:
                 f.write(text)
-                f.truncate()
 
 def generate():
     if (os.path.exists(TARGET_DIR_PATH)):
