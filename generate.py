@@ -92,7 +92,7 @@ def get_nav_html(pages) -> str:
     """
     nav_html = ""
     for page in pages:
-        location = page.location.replace(f"{TARGET_DIR_PATH}/", "")
+        location = "/" + page.location.replace(f"{TARGET_DIR_PATH}/", "")
         nav_html += f"<a href={location}><li>{page.title}</li></a>\n"
         if page.children is not None:
             nav_html += "<ol>\n" + get_nav_html(page.children) + "<ol>\n"
